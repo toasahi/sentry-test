@@ -1,0 +1,21 @@
+name: sentry-upload-souce-map-actions
+run-name: ${{ github.actor }}
+on: 
+ push: 
+   branches: 
+    - main
+jobs:
+    source-map-upload-actions:
+        runs-on: ubuntu-latest # ランナーサーバー(ワークフローを実行するサーバー)
+        timeout-minutes: 10
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: initialize
+              run: npm install
+            
+            - name: soucemap
+              run: npm run build
+              env:
+                SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
